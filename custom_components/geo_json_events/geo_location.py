@@ -113,8 +113,6 @@ class GeoJsonLocationEvent(GeolocationEvent):
         self._attr_latitude = feed_entry.coordinates[0]
         self._attr_longitude = feed_entry.coordinates[1]
         self._state_attributes = feed_entry.properties
-
-    @property
-    def extra_state_attributes(self) -> dict[str, Any]:
-        """Return the device state attributes."""
-        return self._state_attributes
+        self._attr_extra_state_attributes = feed_entry.properties
+        if self._external_id:
+            self._attr_extra_state_attributes[ATTR_EXTERNAL_ID] = self._external_id
